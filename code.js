@@ -21,7 +21,8 @@ function getAllValues(str) {
   if (!matched) {
     return [];
   }
-  let result = str.split(",");
+  let numString = removeNewLine(str);
+  let result = numString.split(",");
   let isValid = true;
   result.forEach((elem) => {
     if (isNaN(parseInt(elem.toString()))) {
@@ -33,5 +34,11 @@ function getAllValues(str) {
   } else {
     return [];
   }
+}
+
+function removeNewLine(str) {
+  let newstr = "";
+  newstr = str.split("\n").join(",");
+  return newstr;
 }
 module.exports = add;
