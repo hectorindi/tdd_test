@@ -1,15 +1,10 @@
-let constants = {
-  delim: ",",
-  str: "",
-};
 /**
  * Add 2 number spaprated my a comma , input as a string
  */
 function add(numString) {
   let result;
-  constants.str = numString;
-  if (!constants.str) return 0;
-  let allNums = getAllValues();
+  if (!numString) return 0;
+  let allNums = getAllValues(numString);
   if (allNums.length < 2) return 0;
   result = allNums.reduce(
     (prev, curr) => parseInt(prev.toString()) + parseInt(curr.toString())
@@ -21,14 +16,16 @@ function add(numString) {
  * return an array of all the valid values in input string
  */
 
-function getAllValues(str) {
-  setDelimiter();
-  let matched = constants.str.match(constants.delim);
+function getAllValues(numString) {
+  let resultDeli = getDelimiterAndUpdateStr(numString);
+  let delim = resultDeli[0];
+  numString = resultDeli[1];
+  let matched = numString.match(delim);
   if (!matched) {
     return [];
   }
-  removeNewLine();
-  let result = constants.str.split(constants.delim);
+  numString = removeNewLine(numString, delim);
+  let result = numString.split(delim);
   let isValid = true;
   result.forEach((elem) => {
     if (isNaN(parseInt(elem.toString()))) {
@@ -46,23 +43,24 @@ function getAllValues(str) {
 /**
  * return an array of all the valid values in input string
  */
-function setDelimiter() {
+function getDelimiterAndUpdateStr(str) {
   let delim = ",";
-  let delimArr = constants.str.split("//");
+  let strWithoutDelim = str;
+  let delimArr = str.split("//");
   if (delimArr.length > 1) {
     delim = delimArr.toString()[1];
     delimArr[1].split("").pop().toString();
-    constants.str = delimArr[1].substring(1);
+    strWithoutDelim = delimArr[1].substring(1);
   }
-  constants.delim = delim;
+  return [delim, strWithoutDelim];
 }
 
-function removeNewLine() {
+function removeNewLine(str, delim) {
   let newstr = "";
-  if (constants.str[0] === "\n") {
-    constants.str = constants.str.substring(1);
+  if (str[0] === "\n") {
+    str = str.substring(1);
   }
-  newstr = constants.str.split("\n").join(constants.delim);
-  constants.str = newstr;
+  newstr = str.split("\n").join(delim);
+  return newstr;
 }
 module.exports = add;
