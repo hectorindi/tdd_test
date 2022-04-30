@@ -5,8 +5,10 @@ function add(numString) {
   let result;
   if (!numString) return 0;
   let allNums = getAllValues(numString);
-  if (!allNums) return 0;
-  result = allNums.reduce((prev, curr) => prev + curr, 0);
+  if (allNums.length < 2) return 0;
+  result = allNums.reduce(
+    (prev, curr) => parseInt(prev.toString()) + parseInt(curr.toString())
+  );
   return result;
 }
 
@@ -19,7 +21,17 @@ function getAllValues(str) {
   if (!matched) {
     return [];
   }
-  let result;
-  return result;
+  let result = str.split(",");
+  let isValid = true;
+  result.forEach((elem) => {
+    if (isNaN(parseInt(elem.toString()))) {
+      isValid = false;
+    }
+  });
+  if (isValid) {
+    return result;
+  } else {
+    return [];
+  }
 }
 module.exports = add;
