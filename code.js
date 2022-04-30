@@ -22,13 +22,13 @@ function add(numString) {
  */
 
 function getAllValues(str) {
-  constants.delim = getDelimiter();
+  setDelimiter();
   let matched = constants.str.match(constants.delim);
   if (!matched) {
     return [];
   }
-  let numString = removeNewLine();
-  let result = numString.split(constants.delim);
+  removeNewLine();
+  let result = constants.str.split(constants.delim);
   let isValid = true;
   result.forEach((elem) => {
     if (isNaN(parseInt(elem.toString()))) {
@@ -46,7 +46,7 @@ function getAllValues(str) {
 /**
  * return an array of all the valid values in input string
  */
-function getDelimiter(str) {
+function setDelimiter() {
   let delim = ",";
   let delimArr = constants.str.split("//");
   if (delimArr.length > 1) {
@@ -54,15 +54,15 @@ function getDelimiter(str) {
     delimArr[1].split("").pop().toString();
     constants.str = delimArr[1].substring(1);
   }
-  return delim;
+  constants.delim = delim;
 }
 
-function removeNewLine(str) {
+function removeNewLine() {
   let newstr = "";
   if (constants.str[0] === "\n") {
     constants.str = constants.str.substring(1);
   }
   newstr = constants.str.split("\n").join(constants.delim);
-  return newstr;
+  constants.str = newstr;
 }
 module.exports = add;

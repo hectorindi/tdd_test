@@ -29,7 +29,7 @@ describe("add function ", function () {
   it("with only 1 valid number argument with \n and invalid ,", function () {
     expect(add("1,\n")).to.equal(0);
   });
-  it("with only 2 valid number argument with \n and custom delimdelimiter ;,", function () {
+  it("with only 2 valid number argument with \n and custom delimdelimiter ;", function () {
     expect(add("//;\n1;2")).to.equal(3);
   });
   it("with only 2 valid number argument with \n and custom delimdelimiter ^", function () {
